@@ -36,7 +36,6 @@ const EditCollegeVerifierProfile = ({ profile, handleClose, handleGetCollegeVeri
             mobile_no: getValues()?.mobile_no,
         }
 
-        console.log(body_data)
 
         try {
             const resp = await fetch(`${baseUrl}/updateCollegeVerifier`, {
@@ -60,7 +59,7 @@ const EditCollegeVerifierProfile = ({ profile, handleClose, handleGetCollegeVeri
             toast.error('Failed to update User:', error)
             console.error('Failed to update user:', error);
         } finally {
-            console.log('done')
+            // console.log('done')
         }
     }
     return (

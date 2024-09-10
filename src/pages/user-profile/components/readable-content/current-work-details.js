@@ -31,7 +31,7 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
       </Grid>
       <Grid container item spacing={2}>
         <Grid item xs={12} md={4}>
-          <Typography variant="body5" color="grey.label">
+          <Typography variant="subtitle2" color="grey.label">
             Organisation Name
           </Typography>
           <Grid display="flex" alignItems="center">
@@ -49,7 +49,7 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="body5" color="grey.label">
+          <Typography variant="subtitle2" color="grey.label">
             Organisation Type
           </Typography>
           <Grid display="flex" alignItems="center">
@@ -67,7 +67,7 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="body5" color="grey.label">
+          <Typography variant="subtitle2" color="grey.label">
             Address
             <Typography component="span" color="error.main">
               *
@@ -89,7 +89,7 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid container item spacing={2} mt={1}>
           <Grid item xs={12} md={4}>
-            <Typography variant="body5" color="grey.label">
+            <Typography variant="subtitle2" color="grey.label">
               Street
               <Typography component="span" color="error.main">
                 *
@@ -110,7 +110,7 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
           </Grid>
           {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
           <Grid item xs={12} md={4}>
-            <Typography variant="body5" color="grey.label">
+            <Typography variant="subtitle2" color="grey.label">
               Landmark
             </Typography>
             <Grid display="flex" alignItems="center">
@@ -128,7 +128,7 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
           </Grid>
           {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
           <Grid item xs={12} md={4}>
-            <Typography variant="body5" color="grey.label">
+            <Typography variant="subtitle2" color="grey.label">
               Locality
               <Typography component="span" color="error.main">
                 *
@@ -152,7 +152,7 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
       </Grid>
       <Grid container item spacing={2} mt={1}>
         <Grid item xs={12} md={4}>
-          <Typography variant="body5" color="grey.label">
+          <Typography variant="subtitle2" color="grey.label">
             State
             <Typography component="span" color="error.main">
               *
@@ -173,7 +173,7 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="body5" color="grey.label">
+          <Typography variant="subtitle2" color="grey.label">
             District
             <Typography component="span" color="error.main">
               *
@@ -194,7 +194,7 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="body5" color="grey.label">
+          <Typography variant="subtitle2" color="grey.label">
             Sub District
           </Typography>
           <Grid display="flex" alignItems="center">
@@ -214,7 +214,7 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
       </Grid>
       <Grid container item spacing={2} mt={1}>
         <Grid item xs={12} md={4}>
-          <Typography variant="body5" color="grey.label">
+          <Typography variant="subtitle2" color="grey.label">
             City/Town/Village
           </Typography>
           <Grid display="flex" alignItems="center">
@@ -232,7 +232,7 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="body5" color="grey.label">
+          <Typography variant="subtitle2" color="grey.label">
             Address
             <Typography component="span" color="error.main">
               *
@@ -253,7 +253,7 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="body5" color="grey.label">
+          <Typography variant="subtitle2" color="grey.label">
             Pincode
             <Typography component="span" color="error.main">
               *
@@ -273,8 +273,11 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
           </Grid>
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
+
+      </Grid>
+      <Grid container item spacing={2} mt={1}>
         <Grid item xs={12} md={4}>
-          <Typography variant="body5" color="grey.label">
+          <Typography variant="subtitle2" color="grey.label">
             Teleconsultation URL
           </Typography>
           <Grid display="flex" alignItems="center">

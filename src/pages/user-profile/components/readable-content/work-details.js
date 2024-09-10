@@ -24,7 +24,7 @@ const WorkDetails = ({ workProfileDetails }) => {
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>
         <Grid item xs={12} md={4}>
-          <Typography variant="body5" color="grey.label">
+          <Typography variant="subtitle2" color="grey.label">
             Are you Currently Working?
             <Typography component="span" color="error.main">
               *
@@ -49,7 +49,7 @@ const WorkDetails = ({ workProfileDetails }) => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="body5" color="grey.label">
+          <Typography variant="subtitle2" color="grey.label">
             Nature of Work
             <Typography component="span" color="error.main">
               *
@@ -70,7 +70,7 @@ const WorkDetails = ({ workProfileDetails }) => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="body5" color="grey.label">
+          <Typography variant="subtitle2" color="grey.label">
             Choose Work Status
             <Typography component="span" color="error.main">
               *
@@ -91,9 +91,9 @@ const WorkDetails = ({ workProfileDetails }) => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
       </Grid>
-      <Grid container item spacing={2} mt={1}>
+      <Grid container item spacing={2}>
         <Grid item xs={12} md={8} lg={12}>
-          <Typography variant="body5" color="inputTextColor.main">
+          <Typography variant="subtitle2" color="grey.label">
             Upload the proof of work for govt.such as Appointment letter, Last pay slip, Recent
             transfer order etc.
             <Typography component="span" color="error.main">

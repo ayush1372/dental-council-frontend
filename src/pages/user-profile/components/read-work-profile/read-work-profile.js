@@ -36,7 +36,7 @@ const ReadWorkProfile = ({
   const [selected, setSelected] = useState('');
   const [confirmationModal, setConfirmationModal] = useState(false);
   const { userActiveTab } = useSelector((state) => state.common);
-  const [accordionKey, setAccordionKey] = useState('accordion-0');
+  const [accordionKeys, setAccordionKeys] = useState(['accordion-0', 'accordion-1']);
 
   const accordions = [
     // {
@@ -52,8 +52,12 @@ const ReadWorkProfile = ({
       body: CurrentWorkDetails,
     },
   ];
-  const handleChange = (accordionValue) => (_event, isExpanded) => {
-    setAccordionKey(isExpanded ? accordionValue : null);
+  const handleChange = (accordionValue) => () => {
+    if (accordionKeys.includes(accordionValue)) {
+      setAccordionKeys(accordionKeys.filter((a) => a !== accordionValue));
+    } else {
+      setAccordionKeys([...accordionKeys, accordionValue]);
+    }
   };
 
   const handleSubmitDetails = () => {
@@ -80,7 +84,7 @@ const ReadWorkProfile = ({
             <Accordion
               square="false"
               key={0}
-              expanded={accordionKey === key}
+              defaultExpanded
               onChange={handleChange(key)}
               sx={{
                 '.Mui-expanded.MuiAccordionSummary-root': {
@@ -95,7 +99,7 @@ const ReadWorkProfile = ({
                 },
               }}
             >
-              <AccordionSummary expandIcon={accordionKey === key ? <RemoveIcon /> : <AddIcon />}>
+              <AccordionSummary expandIcon={accordionKeys.includes(key) ? <RemoveIcon /> : <AddIcon />}>
                 <Typography variant="body1" color="primary">
                   {accordion.title}
                 </Typography>
@@ -213,19 +217,19 @@ const ReadWorkProfile = ({
             selected === 'verify'
               ? '500px'
               : selected === 'forward'
-              ? '700px'
-              : { md: '630px', sm: '100%' }
+                ? '700px'
+                : { md: '630px', sm: '100%' }
           }
           height={
             selected === 'reject'
               ? '500px'
               : selected === 'verify'
-              ? '380px'
-              : selected === 'forward'
-              ? '300px'
-              : selected === 'raise'
-              ? '650px'
-              : '720px'
+                ? '380px'
+                : selected === 'forward'
+                  ? '300px'
+                  : selected === 'raise'
+                    ? '650px'
+                    : '720px'
           }
           borderRadius={'40px'}
         >
@@ -233,8 +237,8 @@ const ReadWorkProfile = ({
             <CloseIcon onClick={handleClose} />
           </Box>
           {loggedInUserType === 'NMC' ||
-          loggedInUserType === 'SMC' ||
-          loggedInUserType === 'College' ? (
+            loggedInUserType === 'SMC' ||
+            loggedInUserType === 'College' ? (
             <Box
               display={'flex'}
               flexDirection={'column'}

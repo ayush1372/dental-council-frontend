@@ -351,7 +351,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   };
 
   const onHandleOptionNext = () => {
-    console.log('got here')
     onHandleSave(true);
   };
 

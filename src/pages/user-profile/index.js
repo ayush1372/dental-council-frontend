@@ -41,8 +41,10 @@ import PreviewProfile from './components/preview-profile/preview-profile';
 import ProfileConsent from './components/profile-consent/profile-consent';
 import RegisterAndAcademicDetails from './components/register-and-academic-details/register-and-academic-details';
 import ConfirmEsignProcess from './e-sign-loader';
+import WorkProfile from './components/work-profile';
 
-const readWizardSteps = ['Personal Details', 'Registration & Academic Details']; //, 'Work Profile'
+// const readWizardSteps = ['Personal Details', 'Registration & Academic Details'];
+const readWizardSteps = ['Personal Details', 'Registration & Academic Details', 'Work Profile']; 
 
 export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
   const theme = useTheme();
@@ -447,6 +449,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
               px={3}
               py={2}
             >
+              {/* Main Heading and Progress Bar */}
               <Grid item xs={12} sm="auto">
                 <Box display="flex" gap={1.5} alignItems={'center'} width="100%">
                   <Typography variant="h2" component="span" flexBasis="0" flexGrow="1">
@@ -600,7 +603,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
             isStepClickEnable={['SMC', 'NMC', 'College', 'Doctor'].includes(loggedInUserType)}
             showCheckCirlce={loggedInUserType === 'Doctor'}
             handleStep={handleStep}
-          ></Wizard>
+          />
 
           <Box bgcolor="white.main">
             {activeStep === 0 && (
@@ -623,7 +626,16 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
                 selectedDataIndex={selectedRowData?.SNo?.value - 1}
               />
             )}
-            {activeStep === 2 && (
+              {activeStep === 2 && (
+            <WorkProfile
+              isReadMode={isReadMode}
+              setIsReadMode={setIsReadMode}
+              handleNext={handleNext}
+              handleBack={handleBack}
+              loggedInUserType={loggedInUserType}
+            />
+          )}
+            {activeStep === 3 && (
               <PreviewProfile
                 isReadMode={isReadMode}
                 setIsReadMode={setIsReadMode}
@@ -632,7 +644,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
               />
             )}
           </Box>
-          {!isReadMode && activeStep === 2 && (
+          {!isReadMode && activeStep === 3 && (
             <ProfileConsent
               setShowStaticFormProgress={setShowStaticFormProgress}
               handleBack={handleBack}

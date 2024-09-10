@@ -111,8 +111,6 @@ const EditQualificationDetails = ({
   //Helper Method to get the data of the query raised against the field
   const getQueryRaised = (fieldName) => {
     let query = raisedQueryData?.find((obj) => obj.field_name === fieldName);
-    console.log("--------------------------------------------------------------------------")
-    console.log(fieldName, " ", query)
     return query === undefined;
   };
 
