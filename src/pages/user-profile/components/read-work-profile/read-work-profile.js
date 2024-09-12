@@ -21,6 +21,7 @@ import { useSelector } from 'react-redux';
 import SuspendLicenseVoluntaryRetirement from '../../../suspend-license-voluntary-retirement';
 import CurrentWorkDetails from '../readable-content/current-work-details';
 import WorkDetails from '../readable-content/work-details';
+import DeclaredPlaceOfWork from '../readable-content/declared-place-of-work';
 const ReadWorkProfile = ({
   handleBack,
   showActions = true,
@@ -49,7 +50,8 @@ const ReadWorkProfile = ({
     },
     {
       title: 'Current Work Details',
-      body: CurrentWorkDetails,
+      // body: CurrentWorkDetails,
+      body: DeclaredPlaceOfWork,
     },
   ];
   const handleChange = (accordionValue) => () => {

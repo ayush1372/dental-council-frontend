@@ -91,7 +91,7 @@ const WorkDetails = ({ workProfileDetails }) => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
       </Grid>
-      <Grid container item spacing={2}>
+      {/* <Grid container item spacing={2}>
         <Grid item xs={12} md={8} lg={12}>
           <Typography variant="subtitle2" color="grey.label">
             Upload the proof of work for govt.such as Appointment letter, Last pay slip, Recent
@@ -104,7 +104,7 @@ const WorkDetails = ({ workProfileDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               <AttachFileIcon fontSize="10px" />
               View attachment
-            </Typography>
+            </Typography> */}
             {/* {userActiveTab === 'dashboard' && (
               <ContactSupportOutlinedIcon
                 color="primary"
@@ -112,10 +112,10 @@ const WorkDetails = ({ workProfileDetails }) => {
                 fontSize="width30"
               />
             )}{' '} */}
-          </Grid>
+          {/* </Grid>
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
-      </Grid>
+      </Grid> */}
     </Grid>
   );
 };

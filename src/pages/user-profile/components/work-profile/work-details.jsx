@@ -1408,7 +1408,7 @@ const WorkDetails = ({
             color="secondary"
             sx={{ paddingTop: '14px', paddingBottom: '14px' }}
           >
-            Submit
+            Declare
           </Button>
           <Button
             color="grey"

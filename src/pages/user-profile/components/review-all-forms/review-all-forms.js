@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Box, Tab, Tabs } from '@mui/material';
+import { Box, Grid, Tab, Tabs } from '@mui/material';
 
 // import ProfileConsent from '../profile-consent/profile-consent';
 // import { useTranslation } from 'react-i18next';
@@ -19,13 +19,8 @@ const ReviewAllForms = () => {
     setTabValue(value);
   };
   return (
-    <Box
-      mt={2}
-      sx={{
-        display: 'flex',
-      }}
-    >
-      <Box>
+    <Grid container spacing={1}>
+      <Grid item xs={12} sm={3}>
         <Tabs
           orientation="vertical"
           value={tabValue}
@@ -50,19 +45,14 @@ const ReviewAllForms = () => {
           <Tab label="Personal Details" />
           <Tab label="Registration & Academic Details" />
           <Tab label="Work Details" />
-        </Tabs>
-      </Box>
-      <Box
-        ml={2}
-        sx={{
-          width: '100%',
-        }}
-      >
+        </Tabs></Grid>
+      <Grid item xs={12} sm={9}>
         {tabValue === 0 && <ReadPersonalDetails showActions={false} />}
         {tabValue === 1 && <ReadRegisterAndAcademicDetails showActions={false} />}
         {tabValue === 2 && <ReadWorkProfile showActions={false} />}
-      </Box>
-    </Box>
+      </Grid>
+    </Grid>
+
   );
 };
 export default ReviewAllForms;
