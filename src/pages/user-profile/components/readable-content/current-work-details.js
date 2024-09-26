@@ -38,13 +38,13 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {work_organization ? work_organization : ''}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {/* {userActiveTab === 'dashboard' && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
               />
-            )}{' '}
+            )}{' '} */}
           </Grid>
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
@@ -56,13 +56,13 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {address_line1 ? address_line1 : ''}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {/* {userActiveTab === 'dashboard' && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
               />
-            )}{' '}
+            )}{' '} */}
           </Grid>
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
@@ -77,13 +77,13 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {address_line1 ? address_line1 : ''}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {/* {userActiveTab === 'dashboard' && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
               />
-            )}{' '}
+            )}{' '} */}
           </Grid>
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
@@ -99,13 +99,13 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
               <Typography variant="subtitle2" color="textPrimary.main">
                 {address_line1 ? address_line1 : ''}
               </Typography>
-              {userActiveTab === 'dashboard' && (
+              {/* {userActiveTab === 'dashboard' && (
                 <ContactSupportOutlinedIcon
                   color="primary"
                   onClick={() => setOpenModal(true)}
                   fontSize="width30"
                 />
-              )}{' '}
+              )}{' '} */}
             </Grid>
           </Grid>
           {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
@@ -117,13 +117,13 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
               <Typography variant="subtitle2" color="textPrimary.main">
                 {address_line1 ? address_line1 : ''}
               </Typography>
-              {userActiveTab === 'dashboard' && (
+              {/* {userActiveTab === 'dashboard' && (
                 <ContactSupportOutlinedIcon
                   color="primary"
                   onClick={() => setOpenModal(true)}
                   fontSize="width30"
                 />
-              )}{' '}
+              )}{' '} */}
             </Grid>
           </Grid>
           {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
@@ -138,13 +138,13 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
               <Typography variant="subtitle2" color="textPrimary.main">
                 {address_line1 ? address_line1 : ''}
               </Typography>
-              {userActiveTab === 'dashboard' && (
+              {/* {userActiveTab === 'dashboard' && (
                 <ContactSupportOutlinedIcon
                   color="primary"
                   onClick={() => setOpenModal(true)}
                   fontSize="width30"
                 />
-              )}{' '}
+              )}{' '} */}
             </Grid>
           </Grid>
           {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
@@ -162,13 +162,13 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {state?.name || ''}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {/* {userActiveTab === 'dashboard' && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
               />
-            )}{' '}
+            )}{' '} */}
           </Grid>
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
@@ -183,13 +183,13 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {district?.name || ''}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {/* {userActiveTab === 'dashboard' && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
               />
-            )}{' '}
+            )}{' '} */}
           </Grid>
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
@@ -201,13 +201,13 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {subDistrictName}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {/* {userActiveTab === 'dashboard' && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
               />
-            )}{' '}
+            )}{' '} */}
           </Grid>
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
@@ -221,13 +221,13 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {villageName}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {/* {userActiveTab === 'dashboard' && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
               />
-            )}{' '}
+            )}{' '} */}
           </Grid>
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
@@ -242,13 +242,13 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {address_line1 ? address_line1 : ''}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {/* {userActiveTab === 'dashboard' && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
               />
-            )}{' '}
+            )}{' '} */}
           </Grid>
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
@@ -263,13 +263,13 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {pincode ? pincode : ''}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {/* {userActiveTab === 'dashboard' && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
               />
-            )}{' '}
+            )}{' '} */}
           </Grid>
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
@@ -284,13 +284,13 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {url ? url : ''}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {/* {userActiveTab === 'dashboard' && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
               />
-            )}{' '}
+            )}{' '} */}
           </Grid>
         </Grid>
       </Grid>

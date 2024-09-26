@@ -292,7 +292,6 @@ export default function Dashboard() {
     }
   }, [loggedInUserType]);
 
-
   return (
     <>
       {!showDashboard && (
@@ -305,7 +304,7 @@ export default function Dashboard() {
               handleBreadCrumClick={handleBreadCrumClick}
               levelOneText="Dashboard"
               levelTwoText={selectedCardData?.name}
-              levelthreeText="View Profile"
+              levelthreeText={showTable ? "" : "View Profile"}
             />
           </Grid>
           <Grid item xs={6}>
@@ -454,6 +453,8 @@ export default function Dashboard() {
               setShowViewPorfile={setShowViewPorfile}
               showViewProfile={showViewProfile}
               selectedRowData={selectedRowData}
+              showTable={showTable}
+              showDashboard={showDashboard}
             />
           </Grid>
         </Box>

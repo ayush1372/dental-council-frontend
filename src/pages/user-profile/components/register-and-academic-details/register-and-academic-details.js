@@ -1,13 +1,18 @@
 import { Box } from '@mui/material';
-
+import { useSelector } from 'react-redux';
 import EditRegisterAndAcademicDetails from '../editable-profile/edit-register-and-academic-details';
 import ReadRegisterAndAcademicDetails from '../read-register-and-academic-details/read-register-and-academic-details';
+
 const RegisterAndAcademicDetails = ({
   isReadMode,
   handleNext,
   handleBack,
   loggedInUserType,
   selectedDataIndex,
+  setShowDashboard,
+  setShowTable,
+  showTable,
+  showDashboard
 }) => {
   return (
     <Box py={1}>
@@ -22,10 +27,19 @@ const RegisterAndAcademicDetails = ({
         <EditRegisterAndAcademicDetails handleNext={handleNext} handleBack={handleBack} />
       )}
       {loggedInUserType === 'SMC' && (
-        <EditRegisterAndAcademicDetails
-          handleNext={handleNext}
+        // <EditRegisterAndAcademicDetails
+        //   handleNext={handleNext}
+        //   handleBack={handleBack}
+        //   loggedInUserType={loggedInUserType}
+        // />
+        <ReadRegisterAndAcademicDetails
           handleBack={handleBack}
-          loggedInUserType={loggedInUserType}
+          isReadMode={isReadMode}
+          selectedDataIndex={selectedDataIndex}
+          setShowDashboard={setShowDashboard}
+          setShowTable={setShowTable}
+          showTable={showTable}
+          showDashboard={showDashboard}
         />
       )}
     </Box>

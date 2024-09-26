@@ -34,12 +34,12 @@ export function LinearProgressWithLabel(props) {
         {props.value === 0
           ? '0/4'
           : props.value === 25
-          ? '1/4'
-          : props.value === 50
-          ? '2/4'
-          : props.value === 75
-          ? '3/4'
-          : props.value === 100 && '4/4'}
+            ? '1/4'
+            : props.value === 50
+              ? '2/4'
+              : props.value === 75
+                ? '3/4'
+                : props.value === 100 && '4/4'}
       </Typography>
       {loggedInUserType === 'Doctor' && props?.value === 75 && (
         <Box display="flex" alignItems={'center'} justifyContent="center">
@@ -74,11 +74,13 @@ LinearProgressWithLabel.propTypes = {
 
 const ProgressBar = ({ activeStep, steps, progress, width = '' }) => {
   verboseLog('steps', steps);
-
   return (
     <Box backgroundColor="white" width={width}>
       {progress !== false ? (
-        <LinearProgressWithLabel activeStep={activeStep} value={progress} pb={2} />
+        <LinearProgressWithLabel
+          // activeStep={activeStep} 
+          value={progress}
+          pb={2} />
       ) : (
         ''
       )}

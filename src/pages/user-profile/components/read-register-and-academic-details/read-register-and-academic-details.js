@@ -4,6 +4,7 @@ import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import RemoveIcon from '@mui/icons-material/Remove';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
   Accordion,
   AccordionDetails,
@@ -25,6 +26,8 @@ import { getRegistrationDetailsData } from '../../../../store/actions/doctor-use
 import SuspendLicenseVoluntaryRetirement from '../../../suspend-license-voluntary-retirement';
 import QualificationDetailsContent from '../readable-content/qualification-details-content';
 import RegistrationDetailsContent from '../readable-content/registration-details-content';
+import ReadPersonalDetails from '../read-personal-details/read-personal-details';
+import ReadWorkProfile from '../read-work-profile/read-work-profile';
 
 const ReadRegisterAndAcademicDetails = ({
   handleBack,
@@ -34,6 +37,8 @@ const ReadRegisterAndAcademicDetails = ({
   setShowViewPorfile,
   setShowTable,
   selectedDataIndex,
+  showTable,
+  showDashboard
 }) => {
   const dispatch = useDispatch();
 
@@ -129,8 +134,8 @@ const ReadRegisterAndAcademicDetails = ({
               : element?.qualification_from === 'International' &&
                 loggedInUserType === 'SMC' &&
                 selectedAcademicStatus === 'Pending'
-              ? true
-              : false
+                ? true
+                : false
           );
         }
       }
@@ -162,8 +167,8 @@ const ReadRegisterAndAcademicDetails = ({
         dashboardTableDetailsData?.data?.dashboard_tolist?.length > 0
           ? dashboardTableDetailsData?.data?.dashboard_tolist
           : trackStatusData?.data?.data?.health_professional_applications?.length > 0
-          ? trackStatusData?.data?.data?.health_professional_applications
-          : [];
+            ? trackStatusData?.data?.data?.health_professional_applications
+            : [];
       let newRegistrationDetails = {};
       newRegistrationDetails.hp_profile_id = registrationDetails?.hp_profile_id;
       newRegistrationDetails.nbe_response_to = registrationDetails?.nbe_response_to;
@@ -194,47 +199,127 @@ const ReadRegisterAndAcademicDetails = ({
 
   return (
     <Box>
-      <Box>
-        {accordions.map((accordion, index) => {
-          const key = `accordion-${index}`;
-          const Component = accordion.body;
-          return (
-            <Accordion
-              square="false"
-              key={key}
-              defaultExpanded
-              onChange={handleChange(key)}
-              sx={{
-                '.Mui-expanded.MuiAccordionSummary-root': {
-                  backgroundColor: 'primary.main',
-                  height: '48px',
-                  '.MuiAccordionSummary-content span': {
-                    color: 'white.main',
-                  },
-                  '.MuiAccordionSummary-expandIconWrapper svg': {
-                    fill: '#ffff !important',
-                  },
-                },
-              }}
+      {loggedInUserType === 'SMC' ?
+        (<div>
+          <Accordion defaultExpanded>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
             >
-              <AccordionSummary
-                expandIcon={accordionKeys.includes(key) ? <RemoveIcon /> : <AddIcon />}
-              >
-                <Typography variant="body1" color="primary.main">
-                  {accordion.title}
-                </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Component
-                  registrationDetails={registrationDetailsData}
-                  selectedDataIndex={selectedDataIndex}
-                  selectedAcademicStatus={selectedAcademicStatus}
-                />
-              </AccordionDetails>
-            </Accordion>
-          );
-        })}
-      </Box>
+              <h3>Personal Details</h3>
+            </AccordionSummary>
+            <AccordionDetails>
+              <ReadPersonalDetails />
+            </AccordionDetails>
+          </Accordion>
+          <Accordion
+            defaultExpanded>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+            >
+              <h3>Registration & Academic Details</h3>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Box>
+                {accordions.map((accordion, index) => {
+                  const key = `accordion-${index}`;
+                  const Component = accordion.body;
+                  return (
+                    <Accordion
+                      square="false"
+                      key={key}
+                      defaultExpanded
+                      onChange={handleChange(key)}
+                      sx={{
+                        '.Mui-expanded.MuiAccordionSummary-root': {
+                          backgroundColor: 'primary.main',
+                          height: '48px',
+                          '.MuiAccordionSummary-content span': {
+                            color: 'white.main',
+                          },
+                          '.MuiAccordionSummary-expandIconWrapper svg': {
+                            fill: '#ffff !important',
+                          },
+                        },
+                      }}
+                    >
+                      <AccordionSummary
+                        expandIcon={accordionKeys.includes(key) ? <RemoveIcon /> : <AddIcon />}
+                      >
+                        <Typography variant="body1" color="primary.main">
+                          {accordion.title}
+                        </Typography>
+                      </AccordionSummary>
+                      <AccordionDetails>
+                        <Component
+                          registrationDetails={registrationDetailsData}
+                          selectedDataIndex={selectedDataIndex}
+                          selectedAcademicStatus={selectedAcademicStatus}
+                        />
+                      </AccordionDetails>
+                    </Accordion>
+                  );
+                })}
+              </Box>
+            </AccordionDetails>
+          </Accordion>
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+            >
+              <h3>Work Profile (For your perusal)</h3>
+            </AccordionSummary>
+            <AccordionDetails>
+              <ReadWorkProfile showActions={false} />
+            </AccordionDetails>
+          </Accordion>
+        </div>)
+        : (
+          <Box>
+            {accordions.map((accordion, index) => {
+              const key = `accordion-${index}`;
+              const Component = accordion.body;
+              return (
+                <Accordion
+                  square="false"
+                  key={key}
+                  defaultExpanded
+                  onChange={handleChange(key)}
+                  sx={{
+                    '.Mui-expanded.MuiAccordionSummary-root': {
+                      backgroundColor: 'primary.main',
+                      height: '48px',
+                      '.MuiAccordionSummary-content span': {
+                        color: 'white.main',
+                      },
+                      '.MuiAccordionSummary-expandIconWrapper svg': {
+                        fill: '#ffff !important',
+                      },
+                    },
+                  }}
+                >
+                  <AccordionSummary
+                    expandIcon={accordionKeys.includes(key) ? <RemoveIcon /> : <AddIcon />}
+                  >
+                    <Typography variant="body1" color="primary.main">
+                      {accordion.title}
+                    </Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Component
+                      registrationDetails={registrationDetailsData}
+                      selectedDataIndex={selectedDataIndex}
+                      selectedAcademicStatus={selectedAcademicStatus}
+                    />
+                  </AccordionDetails>
+                </Accordion>
+              );
+            })}
+          </Box>
+        )
+      }
+
+
+
       {showActions && (
         <Box
           pl={2}
@@ -245,7 +330,11 @@ const ReadRegisterAndAcademicDetails = ({
           <Button
             color="grey"
             variant="contained"
-            onClick={handleBack}
+            // onClick={handleBack}
+            onClick={() => {
+              setShowDashboard(false);
+              setShowTable(true)
+            }}
             sx={{
               width: {
                 xs: '100%',
@@ -277,61 +366,95 @@ const ReadRegisterAndAcademicDetails = ({
                           {data?.user_sub_type === 6
                             ? ''
                             : selectedAcademicStatus !== 'Temporary Suspension Requests Approved' &&
-                              selectedAcademicStatus !==
-                                'Permanent Suspension Requests Approved' && (
-                                <>
-                                  {selectedAcademicStatus !== 'Forwarded' &&
-                                    loggedInUserType === 'SMC' && (
-                                      <Button
-                                        variant="contained"
-                                        color="secondary"
-                                        {...bindTrigger(popupState)}
-                                        sx={{
-                                          mr: 2,
-                                          mb: {
-                                            xs: 1,
-                                            md: 0,
-                                          },
-                                          width: {
-                                            xs: '100%',
-                                            md: 'fit-content',
-                                          },
-                                        }}
-                                        disabled={actionVerified}
-                                      >
-                                        Action <MoreHorizIcon />
-                                      </Button>
-                                    )}
-                                  {(((selectedAcademicStatus === 'College/NBE Verified' ||
-                                    selectedAcademicStatus === 'Forwarded' ||
-                                    userActiveTab === 'Activate Licence' ||
-                                    selectedAcademicStatus !== 'Pending' ||
-                                    !showForwardButton) &&
-                                    (loggedInUserType === 'SMC' || loggedInUserType === 'NMC')) ||
-                                    (loggedInUserType === 'SMC' &&
-                                      actionButtonHandler() === false) ||
-                                    (loggedInUserType !== 'SMC' &&
-                                      userActiveTab !== 'Activate Licence' &&
-                                      selectedAcademicStatus !== 'Forwarded')) &&
+                            selectedAcademicStatus !==
+                            'Permanent Suspension Requests Approved' && (
+                              <>
+                                {selectedAcademicStatus !== 'Forwarded' &&
+                                  loggedInUserType === 'SMC' && (
+                                    <Button
+                                      variant="contained"
+                                      color="secondary"
+                                      {...bindTrigger(popupState)}
+                                      sx={{
+                                        mr: 2,
+                                        mb: {
+                                          xs: 1,
+                                          md: 0,
+                                        },
+                                        width: {
+                                          xs: '100%',
+                                          md: 'fit-content',
+                                        },
+                                      }}
+                                      disabled={actionVerified}
+                                    >
+                                      Action <MoreHorizIcon />
+                                    </Button>
+                                  )}
+                                {(((selectedAcademicStatus === 'College/NBE Verified' ||
+                                  selectedAcademicStatus === 'Forwarded' ||
+                                  userActiveTab === 'Activate Licence' ||
+                                  selectedAcademicStatus !== 'Pending' ||
+                                  !showForwardButton) &&
+                                  (loggedInUserType === 'SMC' || loggedInUserType === 'NMC')) ||
+                                  (loggedInUserType === 'SMC' &&
+                                    actionButtonHandler() === false) ||
+                                  (loggedInUserType !== 'SMC' &&
+                                    userActiveTab !== 'Activate Licence' &&
+                                    selectedAcademicStatus !== 'Forwarded')) &&
                                   loggedInUserType !== 'NMC' ? (
-                                    // eslint-disable-next-line react/jsx-indent
+                                  // eslint-disable-next-line react/jsx-indent
+                                  <Button
+                                    variant="contained"
+                                    color="secondary"
+                                    onClick={selectionChangeHandler}
+                                    data-my-value={
+                                      loggedInUserType === 'SMC' ||
+                                        loggedInUserType === 'College' ||
+                                        loggedInUserType === 'NBE'
+                                        ? 'verify'
+                                        : selectedAcademicStatus ===
+                                          'Temporary Suspension Requests Received'
+                                          ? 'blacklist'
+                                          : selectedAcademicStatus ===
+                                            'Permanent Suspension Requests Received'
+                                            ? 'suspend'
+                                            : 'verify'
+                                    }
+                                    sx={{
+                                      mr: 2,
+                                      mb: {
+                                        xs: 1,
+                                        md: 0,
+                                      },
+                                      width: {
+                                        xs: '100%',
+                                        md: 'fit-content',
+                                      },
+                                    }}
+                                  >
+                                    {loggedInUserType === 'SMC' ||
+                                      loggedInUserType === 'College' ||
+                                      loggedInUserType === 'NBE'
+                                      ? 'Verify'
+                                      : selectedAcademicStatus ===
+                                        'Temporary Suspension Requests Received' ||
+                                        selectedAcademicStatus ===
+                                        'Permanent Suspension Requests Received'
+                                        ? 'Suspend'
+                                        : 'Approve'}
+                                  </Button>
+                                ) : null}
+                                {loggedInUserType === 'SMC' &&
+                                  userActiveTab !== 'Activate Licence' &&
+                                  selectedAcademicStatus !== 'Forwarded' &&
+                                  selectedAcademicStatus !== 'College/NBE Verified' &&
+                                  actionButtonHandler() === true && (
                                     <Button
                                       variant="contained"
                                       color="secondary"
                                       onClick={selectionChangeHandler}
-                                      data-my-value={
-                                        loggedInUserType === 'SMC' ||
-                                        loggedInUserType === 'College' ||
-                                        loggedInUserType === 'NBE'
-                                          ? 'verify'
-                                          : selectedAcademicStatus ===
-                                            'Temporary Suspension Requests Received'
-                                          ? 'blacklist'
-                                          : selectedAcademicStatus ===
-                                            'Permanent Suspension Requests Received'
-                                          ? 'suspend'
-                                          : 'verify'
-                                      }
+                                      data-my-value={'forward'}
                                       sx={{
                                         mr: 2,
                                         mb: {
@@ -344,49 +467,15 @@ const ReadRegisterAndAcademicDetails = ({
                                         },
                                       }}
                                     >
-                                      {loggedInUserType === 'SMC' ||
-                                      loggedInUserType === 'College' ||
-                                      loggedInUserType === 'NBE'
-                                        ? 'Verify'
-                                        : selectedAcademicStatus ===
-                                            'Temporary Suspension Requests Received' ||
-                                          selectedAcademicStatus ===
-                                            'Permanent Suspension Requests Received'
-                                        ? 'Suspend'
-                                        : 'Approve'}
+                                      Forward
                                     </Button>
-                                  ) : null}
-                                  {loggedInUserType === 'SMC' &&
-                                    userActiveTab !== 'Activate Licence' &&
-                                    selectedAcademicStatus !== 'Forwarded' &&
-                                    selectedAcademicStatus !== 'College/NBE Verified' &&
-                                    actionButtonHandler() === true && (
-                                      <Button
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={selectionChangeHandler}
-                                        data-my-value={'forward'}
-                                        sx={{
-                                          mr: 2,
-                                          mb: {
-                                            xs: 1,
-                                            md: 0,
-                                          },
-                                          width: {
-                                            xs: '100%',
-                                            md: 'fit-content',
-                                          },
-                                        }}
-                                      >
-                                        Forward
-                                      </Button>
-                                    )}{' '}
-                                </>
-                              )}
+                                  )}{' '}
+                              </>
+                            )}
                           {(loggedInUserType === 'NMC' || loggedInUserType === 'SMC') &&
                             (selectedAcademicStatus === 'Temporary Suspension Requests Approved' ||
                               selectedAcademicStatus ===
-                                'Permanent Suspension Requests Approved') && (
+                              'Permanent Suspension Requests Approved') && (
                               // eslint-disable-next-line react/jsx-indent
                               <Button
                                 variant="contained"
@@ -437,7 +526,7 @@ const ReadRegisterAndAcademicDetails = ({
                                   selectedAcademicStatus === 'Pending')) &&
                               selectedAcademicStatus !== 'Temporary Suspension Requests Received' &&
                               selectedAcademicStatus !==
-                                'Permanent Suspension Requests Received' && (
+                              'Permanent Suspension Requests Received' && (
                                 <MenuItem
                                   onClick={selectionChangeHandler}
                                   data-my-value={'blacklist'}
@@ -452,7 +541,7 @@ const ReadRegisterAndAcademicDetails = ({
                                   selectedAcademicStatus === 'Pending')) &&
                               selectedAcademicStatus !== 'Temporary Suspension Requests Received' &&
                               selectedAcademicStatus !==
-                                'Permanent Suspension Requests Received' && (
+                              'Permanent Suspension Requests Received' && (
                                 <MenuItem
                                   onClick={selectionChangeHandler}
                                   data-my-value={'suspend'}
@@ -488,8 +577,8 @@ const ReadRegisterAndAcademicDetails = ({
             selected === 'verify'
               ? '500px'
               : selected === 'forward'
-              ? '500px'
-              : { md: '630px', sm: '100%' }
+                ? '500px'
+                : { md: '630px', sm: '100%' }
           }
           borderRadius={'40px'}
         >
@@ -497,9 +586,9 @@ const ReadRegisterAndAcademicDetails = ({
             <CloseIcon onClick={handleClose} />
           </Box>
           {loggedInUserType === 'NMC' ||
-          loggedInUserType === 'SMC' ||
-          loggedInUserType === 'NBE' ||
-          loggedInUserType === 'College' ? (
+            loggedInUserType === 'SMC' ||
+            loggedInUserType === 'NBE' ||
+            loggedInUserType === 'College' ? (
             <Box
               display={'flex'}
               flexDirection={'column'}

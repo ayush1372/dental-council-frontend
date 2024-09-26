@@ -67,13 +67,13 @@ export const doctorTabs = [
     icon: <AccountCircleIcon />,
     element: <AdditionalQualifications />,
   },
-  // {
-  //   option: 5,
-  //   name: 'Work Details',
-  //   tabName: 'work-details',
-  //   icon: <AccountCircleIcon />,
-  //   element: <WorkProfile />,
-  // },
+  {
+    option: 5,
+    name: 'Work Details',
+    tabName: 'work-details',
+    icon: <AccountCircleIcon />,
+    element: <WorkProfile />,
+  },
   // {
   //   option: 3,
   //   name: 'Change Password',

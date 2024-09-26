@@ -38,7 +38,7 @@ const ReadWorkProfile = ({
   const [confirmationModal, setConfirmationModal] = useState(false);
   const { userActiveTab } = useSelector((state) => state.common);
   const [accordionKeys, setAccordionKeys] = useState(['accordion-0', 'accordion-1']);
-
+ 
   const accordions = [
     // {
     //   title: 'Special Details',
@@ -50,8 +50,8 @@ const ReadWorkProfile = ({
     },
     {
       title: 'Current Work Details',
-      // body: CurrentWorkDetails,
-      body: DeclaredPlaceOfWork,
+      body: CurrentWorkDetails,
+      // body: DeclaredPlaceOfWork,
     },
   ];
   const handleChange = (accordionValue) => () => {
@@ -77,7 +77,7 @@ const ReadWorkProfile = ({
     setConfirmationModal(true);
   };
   return (
-    <Box>
+    <Box mt={1}>
       <Box>
         {accordions.map((accordion, index) => {
           const key = `accordion-${index}`;

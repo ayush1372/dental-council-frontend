@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 
 import EditIcon from '@mui/icons-material/Edit';
-import { Box, Dialog, Grid, Typography, useTheme } from '@mui/material';
+import { Accordion, AccordionSummary, AccordionDetails, Box, Dialog, Grid, Typography, useTheme, Menu, MenuItem } from '@mui/material';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Switch from '@mui/material/Switch';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
@@ -42,11 +43,12 @@ import ProfileConsent from './components/profile-consent/profile-consent';
 import RegisterAndAcademicDetails from './components/register-and-academic-details/register-and-academic-details';
 import ConfirmEsignProcess from './e-sign-loader';
 import WorkProfile from './components/work-profile';
-
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import PopupState, { bindMenu, bindTrigger } from 'material-ui-popup-state';
 // const readWizardSteps = ['Personal Details', 'Registration & Academic Details'];
-const readWizardSteps = ['Personal Details', 'Registration & Academic Details', 'Work Profile']; 
+const readWizardSteps = ['Personal Details', 'Registration & Academic Details', 'Work Profile'];
 
-export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
+export const UserProfile = ({ showViewProfile, selectedRowData, tabName, setShowDashboard, setShowTable ,showTable,showDashboard}) => {
   const theme = useTheme();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -75,6 +77,9 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
   );
   const logInDoctorStatus = useSelector((state) => state?.loginReducer?.loginData?.data?.Suspended);
 
+  const { userActiveTab, selectedAcademicStatus } = useSelector((state) => state.common);
+
+
   const [isReadMode, setIsReadMode] = useState(true);
   const [emailNotification, setEmailNotification] = useState(emailNotify);
   const [mobileNotification, setMobileNotification] = useState(mobileNotify);
@@ -89,6 +94,8 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
   const [validDetails, setValidDetails] = useState({ mobileNo: false, email: false });
   const [eSignLoader, setESignLoader] = useState(false);
   const [rejectPopup, setRejectPopup] = useState(false);
+
+
 
   const handleNotification = (eventData, mode) => {
     if (mode === 'email') {
@@ -410,6 +417,24 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
   // isReadMode &&
   // isApplicationPending &&
   // !logInDoctorStatus)
+
+  const data = loginData?.data
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [selected, setSelected] = useState('');
+  const [confirmationModal, setConfirmationModal] = useState(false);
+  const menuOpen = Boolean(anchorEl);
+  const handleMenuButtonClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const selectionChangeHandler = (event) => {
+    const { myValue } = event.currentTarget.dataset;
+    setSelected(myValue);
+    setConfirmationModal(true);
+  };
+
   return eSignResponse?.asp_txn_id ? (
     <div></div>
   ) : (
@@ -457,20 +482,21 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
                   </Typography>
                   <ProgressBar
                     width="302px"
-                    progress={
-                      workProfileDetails?.work_details?.is_user_currently_working !== undefined &&
-                        workProfileDetails !== undefined &&
-                        typeof workProfileDetails === 'object' &&
-                        workProfileDetails !== null &&
-                        Object?.keys(workProfileDetails)?.length !== 0
-                        ? 100
-                        : showStaticFormProgress ||
-                          personalDetails?.nmr_id ||
-                          personalDetails?.work_flow_status_id === 1 ||
-                          personalDetails?.work_flow_status_id === 3
-                          ? 75
-                          : progress
-                    }
+                    progress={progress}
+                    // progress={
+                    //   workProfileDetails?.work_details?.is_user_currently_working !== undefined &&
+                    //     workProfileDetails !== undefined &&
+                    //     typeof workProfileDetails === 'object' &&
+                    //     workProfileDetails !== null 
+                    //     && Object?.keys(workProfileDetails)?.length !== 0
+                    //     ? 100
+                    //     : showStaticFormProgress ||
+                    //       personalDetails?.nmr_id ||
+                    //       personalDetails?.work_flow_status_id === 1 ||
+                    //       personalDetails?.work_flow_status_id === 3
+                    //       ? 75
+                    //       : progress
+                    // }
                     completed={completed}
                   />
                 </Box>
@@ -594,47 +620,60 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
           {!isReadMode && (
             <ConstantDetails validDetails={validDetails} setValidDetails={setValidDetails} />
           )}
-          <Wizard
-            activeStep={loggedInUserType === 'College' ? activeStep + 1 : activeStep}
-            handleBack={handleBack}
-            handleNext={handleNext}
-            steps={wizardSteps}
-            progress={false}
-            isStepClickEnable={['SMC', 'NMC', 'College', 'Doctor'].includes(loggedInUserType)}
-            showCheckCirlce={loggedInUserType === 'Doctor'}
-            handleStep={handleStep}
-          />
+
+
+          {loggedInUserType === 'Doctor' &&
+            <Wizard
+              activeStep={loggedInUserType === 'College' ? activeStep + 1 : activeStep}
+              handleBack={handleBack}
+              handleNext={handleNext}
+              steps={wizardSteps}
+              progress={false}
+              isStepClickEnable={['SMC', 'NMC', 'College', 'Doctor'].includes(loggedInUserType)}
+              showCheckCirlce={loggedInUserType === 'Doctor'}
+              handleStep={handleStep}
+            />
+          }
 
           <Box bgcolor="white.main">
-            {activeStep === 0 && (
-              <PersonalDetails
-                isReadMode={isReadMode}
-                setIsReadMode={setIsReadMode}
-                handleNext={handleNext}
-                handleBack={handleBack}
-                validDetails={validDetails}
-                setValidDetails={setValidDetails}
-                selectedDataIndex={selectedRowData?.SNo?.value - 1}
-              />
-            )}
-            {activeStep === 1 && (
+            {loggedInUserType === 'Doctor' &&
+              <>
+
+                {activeStep === 0 && (
+                  <PersonalDetails
+                    isReadMode={isReadMode}
+                    setIsReadMode={setIsReadMode}
+                    handleNext={handleNext}
+                    handleBack={handleBack}
+                    validDetails={validDetails}
+                    setValidDetails={setValidDetails}
+                    selectedDataIndex={selectedRowData?.SNo?.value - 1}
+                  />
+                )}
+              </>}
+            {(activeStep === 1 || loggedInUserType === 'SMC') && (
               <RegisterAndAcademicDetails
                 isReadMode={isReadMode}
                 setIsReadMode={setIsReadMode}
                 handleNext={handleNext}
                 handleBack={handleBack}
+                loggedInUserType={loggedInUserType}
                 selectedDataIndex={selectedRowData?.SNo?.value - 1}
+                setShowDashboard={setShowDashboard}
+                setShowTable={setShowTable}
+                showTable={showTable}
+                showDashboard={showDashboard}
               />
             )}
-              {activeStep === 2 && (
-            <WorkProfile
-              isReadMode={isReadMode}
-              setIsReadMode={setIsReadMode}
-              handleNext={handleNext}
-              handleBack={handleBack}
-              loggedInUserType={loggedInUserType}
-            />
-          )}
+            {activeStep === 2 && (
+              <WorkProfile
+                isReadMode={isReadMode}
+                setIsReadMode={setIsReadMode}
+                handleNext={handleNext}
+                handleBack={handleBack}
+                loggedInUserType={loggedInUserType}
+              />
+            )}
             {activeStep === 3 && (
               <PreviewProfile
                 isReadMode={isReadMode}
@@ -644,6 +683,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
               />
             )}
           </Box>
+
           {!isReadMode && activeStep === 3 && (
             <ProfileConsent
               setShowStaticFormProgress={setShowStaticFormProgress}
